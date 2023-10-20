@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>心诚则灵</title>
+		<style>
+			body{
+				text-align: center;
+				padding: 66px;
+			}
+			.ball{
+				width: 66px;
+				height: 66px;
+				line-height: 66px;
+				font-size: 16px;
+				border-radius: 66px;
+				color: #fff;
+			}
+			.red{
+				background: url("https://cdnjson.com/images/2023/10/20/redCircle.png") no-repeat;
+				background-size: 100% 100%;
+				margin-right: 16px;
+			}
+			.blue{
+				background: url("https://cdnjson.com/images/2023/10/20/blueCircle.png") no-repeat;
+				background-size: 100% 100%;
+			}
+			ul li{
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+			ul li>div{
+				display: flex;
+				align-items: center;
+			}
+			*{
+				list-style: none;
+				margin: 0;
+				padding: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<img src="https://cdnjson.com/images/2023/10/20/u35958619952661326056fm253app138sizew931n0fJPEGfmtauto.jpg" alt="">
+		<div id="app">
+			<ul>
+				<li v-for="item in resArr">
+				<div>
+					<p class="ball red" v-for="red in item.redBalls" v-html="red"></p>
+				</div>
+				<div>
+					<p class="ball blue" v-html="item.blueBall"></p>
+				</div>
+			</li>
+			</ul>
+		</div>
+		<script src="https://cdn.bootcdn.net/ajax/libs/vue/3.3.4/vue.global.js"></script>
+		<script>
+			function generateRedBall() {
+			  const redBalls = [];
+			  while (redBalls.length < 6) {
+			    const num = Math.floor(Math.random() * 33) + 1;
+			    if (!redBalls.includes(num)) {
+			      redBalls.push(num);
+			    }
+			  }
+			  return redBalls.sort((a, b) => a - b); 
+			}
+			// 生成1-16之间的随机数作为蓝球号码  
+			function generateBlueBall() {
+			  return Math.floor(Math.random() * 16) + 1;
+			}
+			 const { createApp, ref } = Vue
+			
+			  createApp({
+			    setup() {
+			      const resArr = ref([])
+				  let count=5;
+				  // 循环生成双色球号码
+				  while(count>0){
+				  	count--
+				  	const redBalls = generateRedBall();
+				  	const blueBall = generateBlueBall();
+				  	resArr.value.push({
+				  		redBalls,
+				  		blueBall
+				  	})
+				  }
+			      return {
+			        resArr
+			      }
+			    }
+			  }).mount('#app')
+		</script>
+	</body>
+</html>
